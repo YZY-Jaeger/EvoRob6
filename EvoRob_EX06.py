@@ -26,7 +26,8 @@ class SimpleANN:
         inputs = df[["feature x", "feature y"]].values
         total = np.dot(inputs, self.weights) - self.bias#w1x1 + w2x2 − w0 = output
         output = activation_function(total)
-        return np.where(output < 0, 0, 1)
+        return np.where(output < 0, 0, 1) #where(condition, [x, y])
+                                        #‘class 0’ if it outputs φ < 0 and as ‘class 1’ if it outputs φ > 0.
 
     def fitness(self, df):
         actual = df["class"].values
@@ -75,8 +76,12 @@ def evolve_anns(df, generations=100, population_size=50, mutation_rate=0.1, elit
 best_ann, fitness_history = evolve_anns(df)
 
 # Print the best weights and bias
-print("Best weights:", best_ann.weights)
-print("Best bias:", best_ann.bias)
+# Print the best weights and bias
+w1, w2 = best_ann.weights
+w0 = best_ann.bias[0]  
+print("Best weights: w1 = {}, w2 = {}".format(w1, w2))
+print("Best bias: w0 = {}".format(w0))
+
 
 # Plot fitness history
 plt.plot(np.max(fitness_history, axis=1), label='Max Fitness')
@@ -84,6 +89,13 @@ plt.plot(np.mean(fitness_history, axis=1), label='Average Fitness')
 plt.title('Fitness over Generations')
 plt.xlabel('Generation')
 plt.ylabel('Max Fitness')
+
+
+# Save plot
+plot_filename = "plot1_Fitness over Generations.png"
+plt.savefig(plot_filename)
+print(f"Plot saved as {plot_filename}")
+
 plt.show()
 
 # Function to plot decision boundary
@@ -98,6 +110,12 @@ def plot_decision_boundary(ann, df):
     plt.contourf(xx, yy, Z, alpha=0.8)
     plt.scatter(df["feature x"], df["feature y"], c=df["class"], edgecolors='k')
     plt.title('Decision Boundary')
+
+    # Save plot
+    plot_filename = "plot2_Decision Boundary.png"
+    plt.savefig(plot_filename)
+    print(f"Plot saved as {plot_filename}")
+
     plt.show()
 
 # Plot the decision boundary
