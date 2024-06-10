@@ -26,7 +26,7 @@ Last time, we unintentionally used algorithm that resembles 'hill climber',putti
 - The fitness of the ANN is determined by the proportion of correctly classified examples in the dataset.
 
 - The best weights and bias found:
-(vary each time the script is executed)
+(vary each time the script is executed; they will be printed in the terminal):
     - Weights: [w1, w2]
     - Bias: w0
 
